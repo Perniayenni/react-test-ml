@@ -6,7 +6,7 @@ export const NavbarSearch = () => {
     <div className="navbar_container">
       <div className="navbar_content_logo_search">
         <div className="navbar_content_logo">
-          <a className="navbar_logo"></a>
+          <a className="navbar_logo" href="/"></a>
         </div>
 
         <Search />
