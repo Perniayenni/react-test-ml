@@ -1,8 +1,8 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import Paper from "@material-ui/core/Paper";
-import { useHistory } from "react-router-dom";
 import { CircularIndeterminate } from "../CircularIndeterminate";
+import { useHistory } from "react-router-dom";
+import Paper from "@material-ui/core/Paper";
+import { useSelector } from "react-redux";
 
 export const ItemsScreen = () => {
   const { items, loading } = useSelector((state) => state.items);

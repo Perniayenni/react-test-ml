@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { useParams, Redirect } from "react-router-dom";
-import { itemsService } from "../../services/apiServices";
-import Paper from "@material-ui/core/Paper";
-import Button from "@material-ui/core/Button";
+import { setLoading, setCategories } from "../../actions/items";
 import { CircularIndeterminate } from "../CircularIndeterminate";
+import { itemsService } from "../../services/apiServices";
+import { useParams, Redirect } from "react-router-dom";
+import { Button, Paper } from "@material-ui/core";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { setLoading, setCategories } from "../../actions/items";
 
 export const ItemScreen = () => {
-  const { items, loading } = useSelector((state) => state.items);
-  const { id } = useParams();
+  const { loading } = useSelector((state) => state.items);
   const [item, setitem] = useState(null);
+  const { id } = useParams();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -20,10 +19,8 @@ export const ItemScreen = () => {
       if (response.item) {
         dispatch(setCategories(response.item.categories));
         setitem(response);
-        dispatch(setLoading(false));
-      } else {
-        dispatch(setLoading(false));
       }
+      dispatch(setLoading(false));
     });
   }, [id]);
 

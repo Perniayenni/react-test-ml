@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { setCategories, setItems, setLoading } from "../../actions/items";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { useHistory, useLocation } from "react-router-dom";
 import { itemsService } from "../../services/apiServices";
 import { useDispatch } from "react-redux";
-import { setCategories, setItems, setLoading } from "../../actions/items";
-import { useHistory } from "react-router-dom";
-import { useLocation } from "react-router-dom";
 import queryString from "query-string";
 
 export const Search = () => {
@@ -20,14 +19,14 @@ export const Search = () => {
       dispatch(setLoading(true));
       itemsService.index({ q: query }).then((resp) => {
         if (resp.suggested_queries || !resp) {
-          dispatch(setItems(""));
-          dispatch(setLoading(false));
+          dispatch(setItems([]));
+          dispatch(setCategories([]));
         } else {
           dispatch(setItems(resp.items));
           dispatch(setCategories(resp.categories));
-          dispatch(setLoading(false));
-          setquery("");
         }
+        dispatch(setLoading(false));
+        setquery("");
       });
     }
   }, [q]);
