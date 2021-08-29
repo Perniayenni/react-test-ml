@@ -2,20 +2,21 @@ import React from "react";
 import { useSelector } from "react-redux";
 import Paper from "@material-ui/core/Paper";
 import { useHistory } from "react-router-dom";
+import { CircularIndeterminate } from "../CircularIndeterminate";
 
 export const ItemsScreen = () => {
-  const { items } = useSelector((state) => state);
+  const { items, loading } = useSelector((state) => state.items);
   let history = useHistory();
 
   function goToItems(id) {
     history.push(`/items/${id}`);
   }
 
-  if (items) {
+  if (items && !loading) {
     return (
       <div className="base_content">
         <Paper>
-          {items.items.map((item) => (
+          {items.map((item) => (
             <div key={item.id} className="items_content_item">
               <div
                 className="items_content_picture pointer"
@@ -46,7 +47,9 @@ export const ItemsScreen = () => {
         </Paper>
       </div>
     );
+  } else if (loading) {
+    return <CircularIndeterminate />;
   } else {
-    return <></>;
+    return <>No se encontraron resultados</>;
   }
 };

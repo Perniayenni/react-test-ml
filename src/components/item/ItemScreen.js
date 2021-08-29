@@ -3,19 +3,31 @@ import { useParams, Redirect } from "react-router-dom";
 import { itemsService } from "../../services/apiServices";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
+import { CircularIndeterminate } from "../CircularIndeterminate";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { setLoading, setCategories } from "../../actions/items";
 
 export const ItemScreen = () => {
+  const { items, loading } = useSelector((state) => state.items);
   const { id } = useParams();
   const [item, setitem] = useState(null);
+  const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(setLoading(true));
     itemsService.show(id).then((response) => {
-      console.log(response);
-      setitem(response);
+      if (response.item) {
+        dispatch(setCategories(response.item.categories));
+        setitem(response);
+        dispatch(setLoading(false));
+      } else {
+        dispatch(setLoading(false));
+      }
     });
   }, [id]);
 
-  if (item) {
+  if (item && !loading) {
     return (
       <div className="base_content">
         <Paper>
@@ -43,7 +55,9 @@ export const ItemScreen = () => {
         </Paper>
       </div>
     );
+  } else if (loading) {
+    return <CircularIndeterminate />;
   } else {
-    return <></>;
+    return <>No se encontraron resultados</>;
   }
 };
