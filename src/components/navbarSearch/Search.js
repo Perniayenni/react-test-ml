@@ -13,24 +13,21 @@ export const Search = () => {
   const { q = "" } = queryString.parse(location.search);
   const [query, setquery] = useState(q);
   const dispatch = useDispatch();
-
   let history = useHistory();
 
   useEffect(() => {
-    searching();
-  }, [q]);
-
-  function searching() {
     itemsService.index({ q: query }).then((resp) => {
       if (resp.suggested_queries) {
         dispatch(setItems(""));
-        history.push("/");
       } else {
         dispatch(setItems(resp));
-        history.push(`/items?q=${query}`);
         setquery("");
       }
     });
+  }, [q]);
+
+  function searching() {
+    history.push(`/items?q=${query}`);
   }
 
   return (
