@@ -12,7 +12,7 @@ export const ItemsScreen = () => {
     history.push(`/items/${id}`);
   }
 
-  if (items && !loading) {
+  if (items && items.length > 0 && !loading) {
     return (
       <div className="base_content">
         <Paper>
@@ -34,8 +34,16 @@ export const ItemsScreen = () => {
                   <span className="items_symbol">$</span>
                   {item.price.amount}
                 </label>
-                <p className="items_title pointer">{item.title}</p>
-                <label className="items_condition pointer">
+                <p
+                  className="items_title pointer"
+                  onClick={() => goToItems(item.id)}
+                >
+                  {item.title}
+                </p>
+                <label
+                  className="items_condition pointer"
+                  onClick={() => goToItems(item.id)}
+                >
                   {item.condition === "new" ? "Nuevo" : "Usado"}
                 </label>
               </div>

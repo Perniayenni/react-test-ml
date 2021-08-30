@@ -35,6 +35,13 @@ export const Search = () => {
     history.push(`/items?q=${query}`);
   }
 
+  function enterPressed(e) {
+    var code = e.keyCode || e.which;
+    if (code === 13) {
+      searching();
+    }
+  }
+
   return (
     <div className="search_content_search">
       <input
@@ -44,6 +51,7 @@ export const Search = () => {
         value={query}
         onChange={(e) => setquery(e.target.value)}
         maxLength="120"
+        onKeyPress={enterPressed.bind(this)}
       ></input>
       <button className="search_button" onClick={searching}>
         <FontAwesomeIcon className="search_icon" icon={faSearch} />

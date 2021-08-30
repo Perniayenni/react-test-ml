@@ -12,8 +12,10 @@
 
   .item_img {
     width: 400px;
+    max-height: 600px;
     align-items: center;
   }
+
   .item_content_description {
     color: rgba(0, 0, 0, 0.55);
     margin-top: 20px;
